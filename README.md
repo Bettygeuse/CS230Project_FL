@@ -111,8 +111,8 @@ python3 client.py
 - Note that the server only starts when there are equal to or more than 2 client nodes. Wait until the training process finishes.
 
 ### Data Preparation
-- Create a folder called '/data' in the root directory.
-- Download and unzip the data in '/data'
+- Create a folder called './data' in the root directory.
+- Download and unzip the data in './data'
 - Change the condition on line 13 to process the data with different conditions.
 - Run the command
   ```
