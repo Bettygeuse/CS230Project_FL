@@ -14,7 +14,7 @@ condition = "Night-Sunny"
 num_images = 2000
 ##########################
 
-if condition == "Daytime-Foggy":
+if condition == "Daytime_Sunny":
     image_dir = "data/Daytime_Sunny/daytime_clear/VOC2007/JPEGImages"
     annotation_dir = "data/Daytime_Sunny/daytime_clear/VOC2007/Annotations"
 elif condition == "Daytime-Foggy":
