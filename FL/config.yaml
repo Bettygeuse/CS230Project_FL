@@ -1,0 +1,15 @@
+traindata_path: "data/training_data_CACC.pkl"
+
+#models
+Predictor:
+  batch_size: 128
+  num_epochs: 40
+  window_size: 50
+  period: 10
+  min_path: "model/normorlize_min_DVA_prd.npy"
+  max_path: "model/normorlize_max_DVA_prd.npy"
+  learning_rate: 0.0001
+
+  hidden_size: 120
+  input_size: 6
+  output_size: 3
