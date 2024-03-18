@@ -110,17 +110,17 @@ for epoch in range(num_epochs):
     
     if np.mean(val_loss) < min_val_loss:
         model_name = f"predictorDVA_params_{np.mean(val_loss)}.pkl"
-        torch.save(model.state_dict(), f"model/predictor/{model_name}")
+        torch.save(model.state_dict(), f"model/{model_name}")
         
         min_val_loss = np.mean(val_loss)
     if epoch % 100 == 0 and epoch != 0:
         model_name = f"predictorDVA_params_{np.mean(val_loss)}.pkl"
-        torch.save(model.state_dict(), f"model/predictor/{model_name}")
+        torch.save(model.state_dict(), f"model/{model_name}")
 
 else:
     if num_epochs > 0:
         model_name = f"predictorDVA_params_final_{np.mean(val_loss)}.pkl"
-        torch.save(model.state_dict(), f"model/predictor/{model_name}")
+        torch.save(model.state_dict(), f"model/{model_name}")
 
 with torch.no_grad():
     errors = []
@@ -145,5 +145,5 @@ with torch.no_grad():
 errors = np.absolute( np.concatenate(errors, axis=0) )
 error_mean = np.mean(errors, axis=0)
 error_cov = np.cov(errors.T)
-np.save("model/predictor/error_mean_%s.npy"%model_name.replace("_params", "").replace(".pkl", ""), error_mean)
-np.save("model/predictor/error_cov_%s.npy"%model_name.replace("_params", "").replace(".pkl", ""), error_cov)
+np.save("model/error_mean_%s.npy"%model_name.replace("_params", "").replace(".pkl", ""), error_mean)
+np.save("model/error_cov_%s.npy"%model_name.replace("_params", "").replace(".pkl", ""), error_cov)
