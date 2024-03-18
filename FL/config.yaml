@@ -1,5 +1,9 @@
 traindata_path: "data/training_data_CACC.pkl"
 
+traindata_path_client_1: "data/FL_data/type1_data.pkl"
+traindata_path_client_2: "data/FL_data/type2_data.pkl"
+traindata_path_client_3: "data/FL_data/type3_data.pkl"
+
 #models
 Predictor:
   batch_size: 128
