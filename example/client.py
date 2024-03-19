@@ -54,7 +54,7 @@ class centralizedClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
         loss, accuracy = centralized.test(self.model, self.testloader, device=DEVICE)
         return float(loss), self.num_examples["testset"], {"accuracy": float(accuracy)}
-    
+
 def main() -> None:
     """Load data, start centralizedClient."""
 

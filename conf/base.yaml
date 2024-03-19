@@ -1,0 +1,33 @@
+---
+# this is a very minimal config file in YAML format
+# it will be processed by Hydra at runtime
+# you might notice it doesn't have anything special that other YAML files don't have
+# check the followup tutorial on how to use Hydra in conjunction with Flower for a 
+# much more advanced usage of Hydra configs
+datasets: ["datasets/SumoSimulation/type1_data.npy", 
+           "datasets/SumoSimulation/type2_data.npy",
+           "datasets/SumoSimulation/type3_data.npy"]
+
+num_rounds: 10 # number of FL rounds in the experiment
+batch_size: 20 # batch size to use by clients during training
+
+uniform_data_distribution: False
+
+
+config_fit: # a config that each client will receive (this is send by the server) when they are sampled. This allows you to dynamically configure the training on the client side as the simulation progresses
+  lr: 0.01 # learning rate to use by the clients
+  momentum: 0.9 # momentum used by SGD optimiser on the client side
+  local_epochs: 1 # number of training epochs each clients does in a fit() round
+
+# Real Machine Testing
+
+client_id: 0 # used only in real federated learning test for training data partition
+server_address: "0.0.0.0:8080" # used only in real federated learning test
+num_clients: 2 # number of total clients available (this is also the number of partitions we need to create)
+
+
+# Simulation
+
+sim_num_clients: 100 # number of total clients available (this is also the number of partitions we need to create)
+sim_num_clients_per_round_fit: 10 # number of clients to involve in each fit round (fit  round = clients receive the model from the server and do local training)
+sim_num_clients_per_round_eval: 25 # number of clients to involve in each evaluate round (evaluate round = client only evaluate the model sent by the server on their local dataset without training it)
