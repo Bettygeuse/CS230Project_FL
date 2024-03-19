@@ -9,7 +9,7 @@ import flwr as fl
 
 from dataset import prepare_dataset
 from client import generate_client_fn
-from server import get_on_fit_config, get_evaluate_fn
+from server import get_on_fit_config, get_evaluate_fn, weighted_average
 
 
 # A decorator for Hydra. This tells hydra to by default load the config in conf/base.yaml
@@ -74,6 +74,7 @@ def main(cfg: DictConfig):
         on_fit_config_fn=get_on_fit_config(
             cfg.config_fit
         ),  # a function to execute to obtain the configuration to send to the clients during fit()
+        evaluate_metrics_aggregation_fn=weighted_average,
         evaluate_fn=get_evaluate_fn(testloader),
     )  # a function to run on the server side to evaluate the global model.
 
@@ -113,11 +114,13 @@ def main(cfg: DictConfig):
     # Now that the simulation is completed, we could save the results into the directory
     # that Hydra created automatically at the beginning of the experiment.
     results_path = Path(save_path) / "results.pkl"
-
+    print(history)
     # add the history returned by the strategy into a standard Python dictionary
     # you can add more content if you wish (note that in the directory created by
     # Hydra, you'll already have the config used as well as the log)
-    results = {"history": history, "anythingelse": "here"}
+    results = {"history": history}
+
+    print(history)
 
     # save the results as a python pickle
     with open(str(results_path), "wb") as h:

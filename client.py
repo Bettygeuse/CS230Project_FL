@@ -15,10 +15,11 @@ from dataset import prepare_dataset
 class FlowerClient(fl.client.NumPyClient):
     """Define a Flower Client."""
 
-    def __init__(self, trainloader, valloader) -> None:
+    def __init__(self, cid, trainloader, valloader) -> None:
         super().__init__()
 
         # the dataloaders that point to the data associated to this client
+        self.cid = cid
         self.trainloader = trainloader
         self.valloader = valloader
 
@@ -82,8 +83,7 @@ class FlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
 
         loss, mean_loss = test(self.model, self.valloader, self.device)
-
-        return float(loss), len(self.valloader), {"mean_loss": mean_loss}
+        return float(loss), len(self.valloader), {"cid": self.cid, "mean_loss": mean_loss}
 
 
 def generate_client_fn(trainloaders, valloaders):
@@ -100,6 +100,7 @@ def generate_client_fn(trainloaders, valloaders):
         # Returns a normal FLowerClient that will use the cid-th train/val
         # dataloaders as it's local data.
         return FlowerClient(
+            cid=cid,
             trainloader=trainloaders[int(cid)],
             valloader=valloaders[int(cid)]
         )
@@ -119,7 +120,7 @@ def main(cfg: DictConfig):
     # Start client
     fl.client.start_numpy_client(
         server_address=cfg.server_address, 
-        client=FlowerClient(trainloaders[cfg.client_id], valloaders[cfg.client_id]))
+        client=FlowerClient(cfg.client_id, trainloaders[cfg.client_id], valloaders[cfg.client_id]))
 
 
 if __name__ == "__main__":

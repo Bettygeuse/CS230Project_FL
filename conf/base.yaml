@@ -22,7 +22,7 @@ config_fit: # a config that each client will receive (this is send by the server
 # Real Machine Testing
 
 client_id: 0 # used only in real federated learning test for training data partition
-server_address: "0.0.0.0:8080" # used only in real federated learning test
+server_address: "128.195.55.169:8081" # used only in real federated learning test
 num_clients: 2 # number of total clients available (this is also the number of partitions we need to create)
 
 

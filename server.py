@@ -15,6 +15,13 @@ import hydra
 from hydra.core.hydra_config import HydraConfig
 from omegaconf import DictConfig, OmegaConf
 
+import pickle as pkl
+
+import time
+import datetime
+
+history = {"server_eval":[], "eval_timestep":[], "client_loss": [], }
+
 def get_on_fit_config(config: DictConfig):
     """Return function that prepares config to send to clients."""
 
@@ -63,13 +70,13 @@ def get_evaluate_fn(testloader):
 
         # Report the loss and any other metric (inside a dictionary). In this case
         # we report the global test accuracy.
-        return loss, {"mean_loss": mean_loss}
+        return loss, {"mean_loss": mean_loss, "timestep": time.time()}
 
     return evaluate_fn
 
 # Define metric aggregation function
 def weighted_average(metrics: List[Tuple[int, Metrics]]) -> Metrics:
-    return {}
+    return {"metrics": metrics}
 
 @hydra.main(config_path="conf", config_name="base", version_base=None)
 def main(cfg: DictConfig):
@@ -87,11 +94,15 @@ def main(cfg: DictConfig):
     )  # a function to run on the server side to evaluate the global model.
 
     # Start Flower server
-    fl.server.start_server(
+    history = fl.server.start_server(
         server_address="0.0.0.0:8080",
         config=fl.server.ServerConfig(num_rounds=cfg.num_rounds),
         strategy=strategy,
     )
+
+    curtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(f"server_result_{curtime}.pkl", 'wb') as f:
+        pkl.dump(history, f, protocol=pkl.HIGHEST_PROTOCOL)
 
 if __name__ == "__main__":
     main()

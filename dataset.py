@@ -8,7 +8,7 @@ def get_dataset(dataset):
 
     train_samples = samples[:-num_samples//5]
     test_samples = samples[-num_samples//5:]
-
+    print(train_samples.shape, test_samples.shape)
     return train_samples, test_samples
     
 
