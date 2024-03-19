@@ -6,8 +6,8 @@ def get_dataset(dataset):
     samples = np.load(dataset)
     num_samples = len(samples)
 
-    train_samples = samples[:num_samples//2]
-    test_samples = samples[num_samples//2:]
+    train_samples = samples[:-num_samples//5]
+    test_samples = samples[-num_samples//5:]
 
     return train_samples, test_samples
     
