@@ -8,7 +8,7 @@ datasets: ["datasets/SumoSimulation/type1_data.npy",
            "datasets/SumoSimulation/type2_data.npy",
            "datasets/SumoSimulation/type3_data.npy"]
 
-num_rounds: 10 # number of FL rounds in the experiment
+num_rounds: 20 # number of FL rounds in the experiment
 batch_size: 20 # batch size to use by clients during training
 
 uniform_data_distribution: False
