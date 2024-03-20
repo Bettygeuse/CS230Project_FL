@@ -1,6 +1,6 @@
 # CS230Project_FL
 
-### AWS EC2 Setup
+### AWS EC2 Setup (Not need now)
 (Instruction writing refered to https://github.com/Ryanhilde/cs230-hdfs/blob/main/launch.md)
 #### 1. Create a key pair
  - Go to https://aws.amazon.com/ -> `Sign In to the Console`.
@@ -97,6 +97,13 @@ ssh <public-ip-of-master>
 ssh <private-ip-of-master>
 ```
 
+### Data Preparation
+- Run the command below to finish dataset setup
+  ```
+  cd datasets/SumoSimulation
+  python3 data_preprocess.py
+  ```
+
 #### 5. Framework Configuration and Execution
  - On all client nodes: Change the ip in client.py to the private IP of the server node.
  - Flower uses port 8080 to communicate between nodes. Allow access through port 8080 from client nodes.
@@ -120,12 +127,3 @@ python3 server.py
 python3 client.py
 ```
 - Note that the server only starts when there are equal to or more than 2 client nodes. Wait until the training process finishes.
-
-### Data Preparation
-- Create a folder called './data' in the root directory.
-- Download and unzip the data in './data'
-- Change the condition on line 13 to process the data with different conditions.
-- Run the command
-  ```
-  python3 data_prepare.py
-  ```
