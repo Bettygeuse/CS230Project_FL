@@ -20,12 +20,7 @@ pip3 install ray==1.11.1 # Required only when running simulation
   ```
 
 #### Framework Configuration and Execution
- - On all client nodes: Change the ip in client.py to the private IP of the server node.
- - Flower uses port 8080 to communicate between nodes. Allow access through port 8080 from client nodes.
-    - HINT: Refer here for instructions on how to add an IP property to a configuration: https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/conf/Configuration.html 
-    - **Note:** For the default network security setting of AWS instance, port `8080` on `Master` node is not accessible from worker nodes. 
-    - To allow access, go to the `AWS Console` -> `EC2 instances` -> Click `Master` instance -> `Security` -> Click the security group link -> `Edit inbound rules` -> `Add rule` -> `Type = Custom TCP`, `Port range = 8080`, `Source = 172.31.0.0/16` -> `Save rules`.
-
+ - Flower uses port 8081 to communicate between nodes. Allow access through port 8081 from client nodes.
 
  - change the config file `conf/base.yaml` of the server and client parameters. For testing on a real machine, please change the below parameters:
     - client_id: must start from 0 and should be sequantially assigned different number to every client
